@@ -20,21 +20,22 @@ public class UserController {
     public UserOutputDTO addUser(@RequestBody UserInputDTO userInputDTO) {
 
         User user = new User();
+        user.createUser(userInputDTO);
         mt.insert(user);
         mt.save(user);
         return new UserOutputDTO(user);
     }
 
-    @GetMapping("findById/id")
-    public UserOutputDTO findById(@PathVariable Integer id) {
+    @GetMapping("findById/{id}")
+    public UserOutputDTO findById(@PathVariable String id) {
         User user = mt.findById(id, User.class);
         return new UserOutputDTO(user);
     }
 
     @GetMapping("get")
-    public UserOutputDTO getAll() {
+    public List<User> getAll() {
         List<User> users = mt.findAll(User.class);
         users.forEach(System.out::println);
-        return null;
+        return users;
     }
 }
